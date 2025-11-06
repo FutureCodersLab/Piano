@@ -1,21 +1,22 @@
 import { keys } from "./keys.js";
 
-const allKeys = [];
+const pianoKeysContainer = document.querySelector(".piano-keys");
+const allAudioNames = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    const pianoKeysContainer = document.querySelector(".piano-keys");
-    createPianoKeys(pianoKeysContainer);
+    keys.forEach((key) => createPianoKey(key));
 });
 
-const createPianoKeys = (container) => {
-    keys.forEach(({ note, key, isBlack, mappedKey }) => {
-        const li = document.createElement("li");
-        li.className = `key ${isBlack ? "black" : "white"}`;
-        const displayKey = mappedKey || key;
-        li.dataset.key = displayKey;
-        li.innerHTML = `<div>${note}</div>
-        <span>${key.toUpperCase()}</span>`;
-        container.appendChild(li);
-        allKeys.push(displayKey);
-    });
+const createPianoKey = (key) => {
+    const { note, keyboard, isBlack, specialKey } = key;
+    const li = document.createElement("li");
+    li.className = `key ${isBlack ? "black" : "white"}`;
+    const audioName = specialKey || keyboard;
+    li.dataset.audioName = audioName;
+    li.innerHTML = `
+        <div>${note}</div>
+        <span>${keyboard}</span>
+    `;
+    pianoKeysContainer.appendChild(li);
+    allAudioNames.push(audioName);
 };
