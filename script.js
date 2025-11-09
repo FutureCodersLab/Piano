@@ -28,7 +28,7 @@ const createPianoKey = (key) => {
         <div>${note}</div>
         <span>${keyboard}</span>
     `;
-    li.addEventListener("click", () => playTune(displayKey));
+    li.addEventListener("click", () => playTune(audioName));
     pianoKeysContainer.appendChild(li);
     allAudioNames.push(audioName);
 };
