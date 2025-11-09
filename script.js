@@ -8,18 +8,10 @@ const allAudioNames = [];
 const audioFiles = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-    preloadAudio();
-
     keys.forEach((key) => {
         createPianoKey(key);
     });
-
-    const allKeys = document.querySelectorAll(".key");
-    allKeys.forEach((keyElement) => {
-        keyElement.addEventListener("click", () =>
-            playAudio(keyElement.dataset.audioName)
-        );
-    });
+    preloadAudio();
 
     document.addEventListener("keydown", handleKeyPress);
 
@@ -36,6 +28,7 @@ const createPianoKey = (key) => {
         <div>${note}</div>
         <span>${keyboard}</span>
     `;
+    li.addEventListener("click", () => playTune(displayKey));
     pianoKeysContainer.appendChild(li);
     allAudioNames.push(audioName);
 };
@@ -48,10 +41,9 @@ const preloadAudio = () => {
 
 const handleKeyPress = (e) => {
     const pressedKey = keys.find(({ keyboard }) => keyboard === e.key);
-    const audioName = pressedKey.specialKey || e.key;
-    if (allAudioNames.includes(audioName)) {
-        playAudio(audioName);
-    }
+    const audioName = pressedKey?.specialKey || e.key;
+
+    playAudio(audioName);
 };
 
 const playAudio = (audioName) => {
